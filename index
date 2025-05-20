@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Customer Request Form</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      box-shadow: 2px 2px 10px #eee;
+    }
+    label { display: block; margin-top: 15px; }
+    input[type="text"], input[type="email"] {
+      width: 100%; padding: 8px; margin-top: 5px;
+    }
+    .error {
+      color: red;
+      display: none;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Customer Request Form</h2>
+  <form id="requestForm" action="https://formspree.io/f/your_form_id" method="POST">
+    <label for="custid">Customer ID (3 digits):</label>
+    <input type="text" id="custid" name="customer_id" maxlength="3" required>
+
+    <label for="firstname">First Name:</label>
+    <input type="text" id="firstname" name="first_name" required>
+
+    <label for="request">Your Request:</label>
+    <input type="text" id="request" name="request" required>
+
+    <input type="submit" value="Submit Request" style="margin-top: 20px;">
+    <div class="error" id="error">Invalid customer ID and name combination.</div>
+  </form>
+
+  <script>
+    // ✅ Pre-approved customer ID and name pairs
+    const allowedCustomers = {
+      "123": "roger",
+      "456": "amy",
+      "789": "bob"
+    };
+
+    document.getElementById("requestForm").addEventListener("submit", function(e) {
+      const custId = document.getElementById("custid").value.trim();
+      const name = document.getElementById("firstname").value.trim().toLowerCase();
+      const errorBox = document.getElementById("error");
+
+      if (allowedCustomers[custId] !== name) {
+        e.preventDefault(); // stop form submission
+        errorBox.style.display = "block";
+      } else {
+        errorBox.style.display = "none";
+      }
+    });
+  </script>
+
+</body>
+</html>
